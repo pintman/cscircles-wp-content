@@ -36,3 +36,27 @@ RUN mknod -m 0666 ./dev/null c 1 3 &&\
 # Needs to be run with 'docker run --privileged ...'
 WORKDIR /cscirc
 #RUN ./safeexec/safeexec --chroot_dir python3jail --env_vars PY --exec_dir / --exec /bin/python3 -u -S -c 'print(1+1)'
+
+## Installing wordpress
+RUN apt-get install -y wordpress
+
+# https://help.ubuntu.com/lts/serverguide/wordpress.html
+COPY wordpress.conf /etc/apache2/sites-available/
+RUN a2ensite wordpress
+COPY config-localhost.php /etc/wordpress/config-localhost.php
+COPY wordpress.sql /
+
+# setting mysql password
+RUN echo 'mysql-server mysql-server/root_password password yourpassword' | debconf-set-selections
+RUN echo 'mysql-server mysql-server/root_password_again password yourpassword' | debconf-set-selections
+RUN apt-get install -y mysql-server mysql-client
+
+# must be part of entrypoint.sh
+#RUN cat /wordpress.sql | mysql --defaults-extra-file=/etc/mysql/debian.cnf
+
+
+#WORKDIR wordpress
+#RUN rm -rf wp-content
+#RUN git clone https://github.com/cemc/cscircles-wp-content.git
+
+EXPOSE 80
