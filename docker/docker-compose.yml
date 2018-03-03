@@ -1,12 +1,16 @@
 version: '2'
 
 services:
+  cscircles:
+    build: .
+    ports:
+      - 8888:80
 
   wordpress:
     image: wordpress
     restart: always
     ports:
-      - 8888:80
+      - 8889:80
     environment:
       WORDPRESS_DB_PASSWORD: example
 
