@@ -46,15 +46,17 @@ RUN a2ensite wordpress
 COPY config-localhost.php /etc/wordpress/config-localhost.php
 COPY wordpress.sql /
 
+# TODO use mysql service container
 # setting mysql password
 RUN echo 'mysql-server mysql-server/root_password password yourpassword' | debconf-set-selections
 RUN echo 'mysql-server mysql-server/root_password_again password yourpassword' | debconf-set-selections
 RUN apt-get install -y mysql-server mysql-client
 
-# must be part of entrypoint.sh
+# TODO must be part of entrypoint.sh
 #RUN cat /wordpress.sql | mysql --defaults-extra-file=/etc/mysql/debian.cnf
 
 
+# TODO integrate cscic wp content
 #WORKDIR wordpress
 #RUN rm -rf wp-content
 #RUN git clone https://github.com/cemc/cscircles-wp-content.git
