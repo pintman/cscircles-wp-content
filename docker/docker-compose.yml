@@ -1,8 +1,9 @@
 version: '2'
 
 services:
-  # TODO must be started privileged
+  # TODO link volume with content
   cscircles:
+    privileged: true
     build: .
     ports:
       - 8888:80
