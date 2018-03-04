@@ -57,10 +57,11 @@ RUN apt-get install -y mysql-client
 
 # location on wordpress image
 #WORKDIR /usr/src/wordpress
-WORKDIR /var/www/html
+#WORKDIR /var/www/html
 #RUN rm -rf wp-content
 #RUN mv wp-content wp-content.orig
-RUN git clone https://github.com/cemc/cscircles-wp-content.git wp-content
+# TODO dont do this during container creation but after installation
+#RUN git clone https://github.com/cemc/cscircles-wp-content.git wp-content
 
 #COPY docker-entrypoint.sh /
 #CMD ["/docker-entrypoint.sh"]
