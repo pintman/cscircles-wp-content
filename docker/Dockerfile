@@ -61,4 +61,7 @@ RUN apt-get install -y mysql-server mysql-client
 #RUN rm -rf wp-content
 #RUN git clone https://github.com/cemc/cscircles-wp-content.git
 
+COPY docker-entrypoint.sh /
+CMD ["/docker-entrypoint.sh"]
+
 EXPOSE 80
