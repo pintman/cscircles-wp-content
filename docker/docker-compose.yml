@@ -1,11 +1,15 @@
 version: '2'
 
 services:
+  # TODO must be started privileged
   cscircles:
     build: .
     ports:
       - 8888:80
-
+    environment:
+      #WORDPRESS_DB_HOST: mysql
+      WORDPRESS_DB_PASSWORD: example
+      
 #  wordpress:
 #    image: wordpress
 #    restart: always

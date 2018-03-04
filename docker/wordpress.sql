@@ -1,8 +1,9 @@
 CREATE DATABASE wordpress;
 
-GRANT SELECT,INSERT,UPDATE,DELETE,CREATE,DROP,ALTER
- ON wordpress.*
- TO wordpress@localhost
- IDENTIFIED BY 'yourpasswordhere';
+-- TODO needed?
+-- GRANT SELECT,INSERT,UPDATE,DELETE,CREATE,DROP,ALTER
+--  ON wordpress.*
+--  TO wordpress@localhost
+--  IDENTIFIED BY 'yourpasswordhere';
 
-FLUSH PRIVILEGES;
+-- FLUSH PRIVILEGES;

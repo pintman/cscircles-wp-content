@@ -1,4 +1,7 @@
-FROM ubuntu:16.04
+#FROM ubuntu:16.04
+# TODO stick to fix number - e.g. 4.9
+# https://hub.docker.com/r/library/wordpress/tags/
+FROM wordpress
 
 MAINTAINER marco@bakera.de
 
@@ -38,30 +41,32 @@ WORKDIR /cscirc
 #RUN ./safeexec/safeexec --chroot_dir python3jail --env_vars PY --exec_dir / --exec /bin/python3 -u -S -c 'print(1+1)'
 
 ## Installing wordpress
-RUN apt-get install -y wordpress
-
+#RUN apt-get install -y wordpress
+#
 # https://help.ubuntu.com/lts/serverguide/wordpress.html
-COPY wordpress.conf /etc/apache2/sites-available/
-RUN a2ensite wordpress
-COPY config-localhost.php /etc/wordpress/config-localhost.php
-COPY wordpress.sql /
+#COPY wordpress.conf /etc/apache2/sites-available/
+#RUN a2ensite wordpress
+#COPY config-localhost.php /etc/wordpress/config-localhost.php
+#COPY wordpress.sql /
 
-# TODO use mysql service container
-# setting mysql password
-RUN echo 'mysql-server mysql-server/root_password password yourpassword' | debconf-set-selections
-RUN echo 'mysql-server mysql-server/root_password_again password yourpassword' | debconf-set-selections
-RUN apt-get install -y mysql-server mysql-client
-
-# TODO must be part of entrypoint.sh
-#RUN cat /wordpress.sql | mysql --defaults-extra-file=/etc/mysql/debian.cnf
-
+# TODO move to top
+RUN apt-get install -y mysql-client
 
 # TODO integrate cscic wp content
-#WORKDIR wordpress
-#RUN rm -rf wp-content
-#RUN git clone https://github.com/cemc/cscircles-wp-content.git
+#WORKDIR /usr/share/wordpress
 
-COPY docker-entrypoint.sh /
-CMD ["/docker-entrypoint.sh"]
+# location on wordpress image
+#WORKDIR /usr/src/wordpress
+WORKDIR /var/www/html
+#RUN rm -rf wp-content
+#RUN mv wp-content wp-content.orig
+RUN git clone https://github.com/cemc/cscircles-wp-content.git wp-content
+
+#COPY docker-entrypoint.sh /
+#CMD ["/docker-entrypoint.sh"]
+
+# for wordpress container
+ENTRYPOINT ["docker-entrypoint.sh"]
+CMD ["apache2-foreground"]
 
 EXPOSE 80
