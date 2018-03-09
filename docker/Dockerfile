@@ -36,6 +36,11 @@ RUN cp /lib64/* lib64 &&\
 RUN mknod -m 0666 ./dev/null c 1 3 &&\
     mknod -m 0666 ./dev/random c 1 8 &&\
     mknod -m 0444 ./dev/urandom c 1 9
+#
+# create scratch directory for pythonjail
+RUN mkdir scratch &&\
+    chown root:www-data scratch &&\
+    chmod g+w scratch
 
 # Testing
 # Needs to be run with 'docker run --privileged ...'
