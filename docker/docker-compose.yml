@@ -5,8 +5,11 @@ services:
   cscircles:
     privileged: true
     build: .
+    volumes:
+      - ./data/html:/var/www/html
     ports:
       - 8888:80
+      - 8889:443
     environment:
       #WORDPRESS_DB_HOST: mysql
       WORDPRESS_DB_PASSWORD: example
