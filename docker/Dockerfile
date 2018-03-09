@@ -42,15 +42,6 @@ RUN mknod -m 0666 ./dev/null c 1 3 &&\
 WORKDIR /cscirc
 #RUN ./safeexec/safeexec --chroot_dir python3jail --env_vars PY --exec_dir / --exec /bin/python3 -u -S -c 'print(1+1)'
 
-## Installing wordpress
-#RUN apt-get install -y wordpress
-#
-# https://help.ubuntu.com/lts/serverguide/wordpress.html
-#COPY wordpress.conf /etc/apache2/sites-available/
-#RUN a2ensite wordpress
-#COPY config-localhost.php /etc/wordpress/config-localhost.php
-#COPY wordpress.sql /
-
 # TODO move to top
 RUN apt-get install -y mysql-client
 
