@@ -1,12 +1,9 @@
-#FROM ubuntu:16.04
-# TODO stick to fix number - e.g. 4.9
-# https://hub.docker.com/r/library/wordpress/tags/
-FROM wordpress
+FROM wordpress:4.9
 
 MAINTAINER marco@bakera.de
 
 RUN apt-get update &&\
-    apt-get install -y git vim  make sudo gcc build-essential wget\
+    apt-get install -y git make sudo gcc build-essential wget\
     # libs for Python 3.6
     libssl-dev zlib1g-dev libncurses5-dev\
     libncursesw5-dev libreadline-dev libsqlite3-dev\
@@ -41,29 +38,10 @@ RUN mkdir scratch &&\
     chown root:www-data scratch &&\
     chmod g+w scratch
 
-# Testing
-# Needs to be run with 'docker run --privileged ...'
-WORKDIR /cscirc
-#RUN ./safeexec/safeexec --chroot_dir python3jail --env_vars PY --exec_dir / --exec /bin/python3 -u -S -c 'print(1+1)'
+VOLUME /var/www/html
 
-# TODO move to top
-RUN apt-get install -y mysql-client
+WORKDIR /var/www/html
 
-# TODO integrate cscic wp content
-#WORKDIR /usr/share/wordpress
-
-# location on wordpress image
-#WORKDIR /usr/src/wordpress
-#WORKDIR /var/www/html
-#RUN rm -rf wp-content
-#RUN mv wp-content wp-content.orig
-# TODO dont do this during container creation but after installation
-#RUN git clone https://github.com/cemc/cscircles-wp-content.git wp-content
-
-#COPY docker-entrypoint.sh /
-#CMD ["/docker-entrypoint.sh"]
-
-# for wordpress container
 ENTRYPOINT ["docker-entrypoint.sh"]
 CMD ["apache2-foreground"]
 

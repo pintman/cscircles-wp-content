@@ -1,27 +1,17 @@
 version: '2'
 
 services:
-  # TODO link volume with content
   cscircles:
     privileged: true
     build: .
     volumes:
+      # Content of wordpress will go here
       - ./data/html:/var/www/html
     ports:
       - 8888:80
-      - 8889:443
     environment:
-      #WORDPRESS_DB_HOST: mysql
       WORDPRESS_DB_PASSWORD: example
       
-#  wordpress:
-#    image: wordpress
-#    restart: always
-#    ports:
-#      - 8889:80
-#    environment:
-#      WORDPRESS_DB_PASSWORD: example
-
   mysql:
     image: mysql:5.7
     restart: always
