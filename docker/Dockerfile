@@ -14,6 +14,7 @@ RUN apt-get update &&\
     liblzma-dev tk-dev &&\
     apt-get clean
 
+# TODO change to /cscircles
 WORKDIR /cscirc
 RUN git clone https://github.com/cemc/safeexec.git &&\
     git clone https://github.com/cemc/python3jail.git
@@ -27,6 +28,7 @@ RUN wget https://www.python.org/ftp/python/3.6.1/Python-3.6.1.tar.xz &&\
 WORKDIR /cscirc/py3/Python-3.6.1
 RUN ./configure --prefix=/cscirc/python3jail &&\
     make && make install
+# TODO removing working dir afterwards
 
 WORKDIR /cscirc/python3jail
 RUN cp /lib64/* lib64 &&\
